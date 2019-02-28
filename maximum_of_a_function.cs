@@ -1,5 +1,5 @@
 // Implement evolutionary algorithm to find maximum value of a function f(x)=x*sin(x)*sin(10x)
-// in interval [-2, 2] with accuracy of 10^-9.
+// in interval [-2, 2].
 
 // Tournament selection
 // One-ponint cross-over
@@ -51,17 +51,21 @@ class Program {
         Console.WriteLine(String.Format("Average value in population: {0}", sum / population.Length) );
 
         // Max fitness
-        double max = 0;
+        double maxFitness = 0;
+        double bestPhenotype = 0;
+
         foreach(uint inidividual in population) {
-          if (getFitness(getPhenotype(inidividual)) > max) {
-            max = getFitness(getPhenotype(inidividual));
+          if (getFitness(getPhenotype(inidividual)) > maxFitness) {
+            maxFitness = getFitness(getPhenotype(inidividual));
+            bestPhenotype = getPhenotype(inidividual);
           }
         }
-        Console.WriteLine(String.Format("Max value in population: {0}", max) );
+
+        Console.WriteLine(String.Format("Max value in population: {0}, for {1}", maxFitness, bestPhenotype));
     }
 
     public static double getPhenotype(uint genotype) {
-      return -2 + genotype / 1000000000.0;
+      return -2.0 + genotype / (double) uint.MaxValue * 4.0;
     }
 
     public static double getFitness(double phenotype) {
